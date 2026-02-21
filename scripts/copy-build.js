@@ -1,0 +1,55 @@
+const fs = require('fs');
+const path = require('path');
+
+// Copy HTML files from .next/server/pages to .next for Netlify
+const sourceDir = path.join(__dirname, '../.next/server/pages');
+const destDir = path.join(__dirname, '../.next');
+
+// Copy static files
+const staticSource = path.join(__dirname, '../.next/static');
+const staticDest = path.join(__dirname, '../.next/static');
+
+function copyRecursive(src, dest) {
+  if (!fs.existsSync(src)) {
+    console.log(`Source directory ${src} does not exist`);
+    return;
+  }
+
+  if (!fs.existsSync(dest)) {
+    fs.mkdirSync(dest, { recursive: true });
+  }
+
+  const entries = fs.readdirSync(src, { withFileTypes: true });
+
+  for (const entry of entries) {
+    const srcPath = path.join(src, entry.name);
+    const destPath = path.join(dest, entry.name);
+
+    if (entry.isDirectory()) {
+      copyRecursive(srcPath, destPath);
+    } else {
+      fs.copyFileSync(srcPath, destPath);
+    }
+  }
+}
+
+// Copy HTML files to root of .next
+if (fs.existsSync(sourceDir)) {
+  console.log('Copying HTML files for Netlify...');
+  const htmlFiles = fs.readdirSync(sourceDir).filter(file => file.endsWith('.html'));
+  
+  htmlFiles.forEach(file => {
+    const src = path.join(sourceDir, file);
+    const dest = path.join(destDir, file);
+    fs.copyFileSync(src, dest);
+    console.log(`Copied ${file}`);
+  });
+  
+  // Copy index.html to root
+  const indexSrc = path.join(sourceDir, 'index.html');
+  if (fs.existsSync(indexSrc)) {
+    fs.copyFileSync(indexSrc, path.join(destDir, 'index.html'));
+  }
+}
+
+console.log('Build files copied successfully for Netlify!');
