@@ -7,6 +7,13 @@
   NPM_FLAGS = "--legacy-peer-deps"
   NETLIFY_NEXT_PLUGIN_SKIP = "true"
 
+# Serve Next.js static files correctly
+[[redirects]]
+  from = "/_next/static/*"
+  to = "/_next/static/:splat"
+  status = 200
+  force = true
+
 # Redirect rules for Next.js client-side routing
 # These redirects handle all routes and serve the appropriate HTML files
 [[redirects]]
@@ -34,7 +41,7 @@
   to = "/termofuse.html"
   status = 200
 
-# Catch-all for client-side routing
+# Catch-all for client-side routing (must be last)
 [[redirects]]
   from = "/*"
   to = "/index.html"
