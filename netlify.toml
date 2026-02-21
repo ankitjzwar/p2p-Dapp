@@ -6,10 +6,8 @@
   NODE_VERSION = "18"
   NPM_FLAGS = "--legacy-peer-deps"
 
-# Disable Next.js plugin for Next.js 12 compatibility
-[[plugins]]
-  package = "@netlify/plugin-nextjs"
-  disabled = true
+# Note: Next.js 12 doesn't use the @netlify/plugin-nextjs plugin
+# The app uses client-side rendering and will work with standard Netlify deployment
 
 # Environment variables (set these in Netlify dashboard)
 # NEXT_PUBLIC_CHAT_APP_ADDRESS = "your_contract_address_here"
