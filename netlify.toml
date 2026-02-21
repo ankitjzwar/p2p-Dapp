@@ -5,6 +5,13 @@
 [build.environment]
   NODE_VERSION = "18"
   NPM_FLAGS = "--legacy-peer-deps"
+  NETLIFY_NEXT_PLUGIN_SKIP = "true"
+
+# Redirect rules for Next.js client-side routing
+[[redirects]]
+  from = "/*"
+  to = "/index.html"
+  status = 200
 
 # Note: Next.js 12 doesn't use the @netlify/plugin-nextjs plugin
 # The app uses client-side rendering and will work with standard Netlify deployment
