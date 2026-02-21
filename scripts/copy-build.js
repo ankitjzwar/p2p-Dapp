@@ -45,10 +45,12 @@ if (fs.existsSync(sourceDir)) {
     console.log(`Copied ${file}`);
   });
   
-  // Copy index.html to root
-  const indexSrc = path.join(sourceDir, 'index.html');
-  if (fs.existsSync(indexSrc)) {
-    fs.copyFileSync(indexSrc, path.join(destDir, 'index.html'));
+  // Copy _redirects file to .next
+  const redirectsSrc = path.join(__dirname, '../public/_redirects');
+  const redirectsDest = path.join(destDir, '_redirects');
+  if (fs.existsSync(redirectsSrc)) {
+    fs.copyFileSync(redirectsSrc, redirectsDest);
+    console.log('Copied _redirects file');
   }
 }
 
