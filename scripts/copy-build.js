@@ -5,10 +5,6 @@ const path = require('path');
 const sourceDir = path.join(__dirname, '../.next/server/pages');
 const destDir = path.join(__dirname, '../.next');
 
-// Copy static files
-const staticSource = path.join(__dirname, '../.next/static');
-const staticDest = path.join(__dirname, '../.next/static');
-
 function copyRecursive(src, dest) {
   if (!fs.existsSync(src)) {
     console.log(`Source directory ${src} does not exist`);
@@ -44,14 +40,31 @@ if (fs.existsSync(sourceDir)) {
     fs.copyFileSync(src, dest);
     console.log(`Copied ${file}`);
   });
-  
-  // Copy _redirects file to .next
-  const redirectsSrc = path.join(__dirname, '../public/_redirects');
-  const redirectsDest = path.join(destDir, '_redirects');
-  if (fs.existsSync(redirectsSrc)) {
-    fs.copyFileSync(redirectsSrc, redirectsDest);
-    console.log('Copied _redirects file');
+}
+
+// Ensure static directory exists and is properly structured
+const staticDir = path.join(__dirname, '../.next/static');
+const nextStaticDir = path.join(__dirname, '../.next/_next/static');
+
+if (fs.existsSync(staticDir)) {
+  console.log('Static files directory exists');
+  // Create _next/static structure for Netlify
+  if (!fs.existsSync(nextStaticDir)) {
+    fs.mkdirSync(nextStaticDir, { recursive: true });
   }
+  // Copy static files to _next/static for proper path resolution
+  copyRecursive(staticDir, nextStaticDir);
+  console.log('Copied static files to _next/static');
+} else {
+  console.log('Warning: Static directory not found');
+}
+
+// Copy _redirects file to .next
+const redirectsSrc = path.join(__dirname, '../public/_redirects');
+const redirectsDest = path.join(destDir, '_redirects');
+if (fs.existsSync(redirectsSrc)) {
+  fs.copyFileSync(redirectsSrc, redirectsDest);
+  console.log('Copied _redirects file');
 }
 
 console.log('Build files copied successfully for Netlify!');
