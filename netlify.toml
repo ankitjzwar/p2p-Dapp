@@ -2,12 +2,12 @@
   command = "npm run build"
   publish = ".next"
 
-[[plugins]]
-  package = "@netlify/plugin-nextjs"
-
 [build.environment]
   NODE_VERSION = "18"
   NPM_FLAGS = "--legacy-peer-deps"
+
+# For Next.js 12, we use the standard build output
+# The app uses client-side rendering, so this should work
 
 # Environment variables (set these in Netlify dashboard)
 # NEXT_PUBLIC_CHAT_APP_ADDRESS = "your_contract_address_here"
