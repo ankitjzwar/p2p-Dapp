@@ -52,9 +52,16 @@ if (fs.existsSync(staticDir)) {
   if (!fs.existsSync(nextStaticDir)) {
     fs.mkdirSync(nextStaticDir, { recursive: true });
   }
-  // Copy static files to _next/static for proper path resolution
+  // Copy entire static directory to _next/static for proper path resolution
+  // This includes: css, chunks, media (images), and build manifests
   copyRecursive(staticDir, nextStaticDir);
-  console.log('Copied static files to _next/static');
+  console.log('Copied static files (CSS, JS, images) to _next/static');
+  
+  // Also ensure media files are accessible
+  const mediaDir = path.join(staticDir, 'media');
+  if (fs.existsSync(mediaDir)) {
+    console.log(`Found ${fs.readdirSync(mediaDir).length} media files`);
+  }
 } else {
   console.log('Warning: Static directory not found');
 }
