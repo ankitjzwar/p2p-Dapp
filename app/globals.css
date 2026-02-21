@@ -1,0 +1,110 @@
+@import "tailwindcss";
+
+:root {
+  --background: #ffffff;
+  --foreground: #171717;
+}
+
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --font-sans: var(--font-geist-sans);
+  --font-mono: var(--font-geist-mono);
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --background: #0a0a0a;
+    --foreground: #ededed;
+  }
+}
+
+body {
+  background: var(--background);
+  color: var(--foreground);
+  font-family: Arial, Helvetica, sans-serif;
+}
+
+/* Hide scrollbar for emoji picker */
+.emoji_picker *::-webkit-scrollbar {
+  display: none !important;
+}
+
+.emoji_picker * {
+  -ms-overflow-style: none !important;
+  scrollbar-width: none !important;
+  overflow-x: hidden !important;
+}
+
+/* Fix emoji picker search bar overlap - Comprehensive fix */
+.emoji_picker input,
+.emoji_picker input[type="text"],
+.emoji_picker input[type="search"],
+.emoji_picker .epr-search input,
+.emoji_picker .epr-search-container input,
+.emoji_picker input[placeholder*="Search"],
+.emoji_picker input[placeholder*="search"],
+.emoji_picker [class*="epr"] input,
+.emoji_picker [class*="search"] input {
+  padding-left: 2.5rem !important;
+  padding-right: 1rem !important;
+  box-sizing: border-box !important;
+  text-indent: 0 !important;
+}
+
+/* Fix search container - make it relative */
+.emoji_picker .epr-search-container,
+.emoji_picker .epr-search,
+.emoji_picker [class*="search-container"],
+.emoji_picker [class*="SearchContainer"],
+.emoji_picker [class*="epr-header"],
+.emoji_picker [class*="epr-header"] > div {
+  position: relative !important;
+  width: 100% !important;
+}
+
+/* Fix search icon positioning - target all possible icon elements */
+.emoji_picker .epr-search-icon,
+.emoji_picker .epr-icn-search,
+.emoji_picker [class*="search-icon"],
+.emoji_picker [class*="SearchIcon"],
+.emoji_picker svg[class*="search"],
+.emoji_picker .epr-search-container svg,
+.emoji_picker .epr-search svg,
+.emoji_picker .epr-header svg,
+.emoji_picker [class*="epr"] svg,
+.emoji_picker .epr-search-container > svg:first-child,
+.emoji_picker .epr-search > svg:first-child,
+.emoji_picker [class*="search"] svg {
+  position: absolute !important;
+  left: 0.75rem !important;
+  top: 50% !important;
+  transform: translateY(-50%) !important;
+  z-index: 10 !important;
+  pointer-events: none !important;
+  margin: 0 !important;
+  width: 1rem !important;
+  height: 1rem !important;
+  flex-shrink: 0 !important;
+}
+
+/* Fix for icon wrapper divs */
+.emoji_picker .epr-search-container > *:first-child:not(input),
+.emoji_picker .epr-search > *:first-child:not(input),
+.emoji_picker [class*="search-container"] > *:first-child:not(input) {
+  position: absolute !important;
+  left: 0.75rem !important;
+  top: 50% !important;
+  transform: translateY(-50%) !important;
+  z-index: 10 !important;
+  pointer-events: none !important;
+  display: flex !important;
+  align-items: center !important;
+}
+
+/* Ensure input doesn't overlap with icon */
+.emoji_picker .epr-search-container input,
+.emoji_picker .epr-search input {
+  position: relative !important;
+  z-index: 1 !important;
+}
