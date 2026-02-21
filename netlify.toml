@@ -8,6 +8,33 @@
   NETLIFY_NEXT_PLUGIN_SKIP = "true"
 
 # Redirect rules for Next.js client-side routing
+# These redirects handle all routes and serve the appropriate HTML files
+[[redirects]]
+  from = "/about"
+  to = "/about.html"
+  status = 200
+
+[[redirects]]
+  from = "/alluser"
+  to = "/alluser.html"
+  status = 200
+
+[[redirects]]
+  from = "/contact"
+  to = "/contact.html"
+  status = 200
+
+[[redirects]]
+  from = "/faq"
+  to = "/faq.html"
+  status = 200
+
+[[redirects]]
+  from = "/termofuse"
+  to = "/termofuse.html"
+  status = 200
+
+# Catch-all for client-side routing
 [[redirects]]
   from = "/*"
   to = "/index.html"
