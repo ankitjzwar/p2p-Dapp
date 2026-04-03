@@ -1,7 +1,12 @@
 import React, {useState, useEffect, useRef} from "react";
 import Image from "next/image";
 import { useRouter } from "next/router";
-import EmojiPicker from 'emoji-picker-react';
+// import EmojiPicker from 'emoji-picker-react';
+import dynamic from "next/dynamic";
+
+const EmojiPicker = dynamic(() => import("emoji-picker-react"), {
+  ssr: false,
+});
 
 //INTERNAL IMPORT
 import Style from "./Chat.module.css";
